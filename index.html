@@ -76,11 +76,30 @@
 
 			// Delete the DIV 
 			document.body.removeChild(scrollDiv);
-
 			return scrollbarWidth;
 		}
-		$(document).ready(function(){
 
+		/*
+		https://stackoverflow.com/questions/14248446/setting-useragent-of-iframe-via-javascript
+		*/
+		var setUA = function(theiframe) {
+            if (Object.defineProperty) {
+                Object.defineProperty(theiframe.contentWindow.navigator, 'userAgent', {
+                    configurable: true,
+                    get: function () {
+                        return 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5';
+                    }
+                });
+            } else if (Object.prototype.__defineGetter__) {
+                theiframe.contentWindow.navigator.__defineGetter__('userAgent', function () {
+                    return 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5';
+                });
+            } else {
+                alert('browser not supported');
+            }
+        };
+
+		$(document).ready(function(){
 
 			$("#device").change(function(){
 				var  scrollWidth=+scrollbarwidth();
@@ -97,6 +116,11 @@
 				$("#device").trigger("change");
 			});
 			$("#previewBtn").click(function(){
+					try{
+						setUA($(".preview-iframe").get(0));
+					}catch(e){
+						console.log(e);						
+					}
 					$(".preview-iframe").attr("src",$("#previewUrl").val());
 					$(".preview-box").show();
 			});
@@ -104,10 +128,10 @@
 				$(".preview-box").hide();
 			});
 
-
-
 		});
 	</script>
+
+
 
 
 	<div class="preview-box">
@@ -127,6 +151,9 @@
 	 	</div>
 	</div>
 	
+
+
+
  </body>
 </html>
 
