@@ -16,17 +16,13 @@
 			position: absolute;
 			top: -9999px;
 		}
-
-		.device{
-			height:3em;
-		}
 		.preview-box{
 			position: fixed;
 			width: 100%;
 		    height: 100%;
 		    top: 0;
 		    bottom: 0;
-		    display: block;
+		    display: none;
 		}
 		.preview-box .mask{
 		    width: 100%;
@@ -64,9 +60,9 @@
  	</style>
  </head>
  <body>
+ 	<input type="text" id="previewUrl" style="display: block;" size="50" width="800" value="http://bossapp.cn/bossappweb/businesscourse/detail/59">	
 	<input type="button" id="previewBtn" value="预览">	
 	<script type="text/javascript">
-
 		function scrollbarwidth()
 		{
 			// Create the measurement node
@@ -84,6 +80,8 @@
 			return scrollbarWidth;
 		}
 		$(document).ready(function(){
+
+
 			$("#device").change(function(){
 				var  scrollWidth=+scrollbarwidth();
 				console.log(scrollWidth);
@@ -98,15 +96,15 @@
 			$(".preview-iframe").load(function(){
 				$("#device").trigger("change");
 			});
-
-			$("#previewBtn").click(function()
-				{
+			$("#previewBtn").click(function(){
+					$(".preview-iframe").attr("src",$("#previewUrl").val());
 					$(".preview-box").show();
-				}
-			);
+			});
 			$(".mask").click(function(){
 				$(".preview-box").hide();
 			});
+
+
 
 		});
 	</script>
@@ -116,7 +114,7 @@
 		<div class="mask">
 		</div>
 		<div class="showbox">
-				<iframe  class="preview-iframe" src="http://bossapp.cn/bossappweb/businesscourse/detail/59" >
+				<iframe  class="preview-iframe">
 				</iframe>
 		</div>
 		<div class="actionbar" >
