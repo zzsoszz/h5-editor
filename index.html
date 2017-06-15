@@ -1,0 +1,193 @@
+<html>
+ <head>
+ 	<script src="js/jquery.min.js"></script>
+ 	<style>
+		iframe{
+			    border-width: 0px;
+			    border-style: initial;
+			    border-color: initial;
+			    border-image: initial;
+			    transition: opacity 0.5s;
+		}
+		.scrollbar-measure {
+			width: 100px;
+			height: 100px;
+			overflow: scroll;
+			position: absolute;
+			top: -9999px;
+		}
+
+		.device{
+			height:3em;
+		}
+		.preview-box{
+			position: fixed;
+			width: 100%;
+		    height: 100%;
+		    top: 0;
+		    bottom: 0;
+		    display: block;
+		}
+		.preview-box .mask{
+		    width: 100%;
+		    height: 100%;
+		    opacity: 0.6;
+		    background-color: #000;
+		    position: absolute;
+		    top: 0;
+		    bottom: 0;
+		    z-index: 4;
+		    display: block;
+		}
+		.preview-box .showbox{
+		    width: auto;
+		    height: auto;
+		    position: absolute;
+		    z-index:5;
+		    background-color: #ffffff;
+		    left: 50%;
+		    top: 50%;
+		    transform:translate(-50%,-50%);
+		}
+
+		.preview-box  .actionbar{
+			position: absolute;
+			bottom:0px;
+			z-index:5;
+			text-align: center;
+			width:100%;
+			height:3em;
+		}
+		.preview-box .actionbar .device{
+			height:2em;
+		}
+ 	</style>
+ </head>
+ <body>
+	<input type="button" id="previewBtn" value="预览">	
+	<script type="text/javascript">
+
+		function scrollbarwidth()
+		{
+			// Create the measurement node
+			var scrollDiv = document.createElement("div");
+			scrollDiv.className = "scrollbar-measure";
+			document.body.appendChild(scrollDiv);
+
+			// Get the scrollbar width
+			var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+			console.warn(scrollbarWidth); // Mac:  15
+
+			// Delete the DIV 
+			document.body.removeChild(scrollDiv);
+
+			return scrollbarWidth;
+		}
+		$(document).ready(function(){
+			$("#device").change(function(){
+				var  scrollWidth=+scrollbarwidth();
+				console.log(scrollWidth);
+				var devicesize=$(this).val().split("*");
+				var width=parseInt(devicesize[0]);
+				var height=devicesize[1];
+				var widthAll=scrollWidth+width;
+				console.log(widthAll);
+				$(".preview-iframe").css("width",widthAll+"px");
+				$(".preview-iframe").css("height",height+"px");
+			});
+			$(".preview-iframe").load(function(){
+				$("#device").trigger("change");
+			});
+
+			$("#previewBtn").click(function()
+				{
+					$(".preview-box").show();
+				}
+			);
+			$(".mask").click(function(){
+				$(".preview-box").hide();
+			});
+
+		});
+	</script>
+
+
+	<div class="preview-box">
+		<div class="mask">
+		</div>
+		<div class="showbox">
+				<iframe  class="preview-iframe" src="http://bossapp.cn/bossappweb/businesscourse/detail/59" >
+				</iframe>
+		</div>
+		<div class="actionbar" >
+			<select class="device" name="device" id="device">
+		 		<option value="320*480">iphone4</option>
+		 		<option value="320*568">iphone5</option>
+		 		<option value="375*667">iphone 6</option>
+				<option value="414*736">iphone 6 plus</option>
+		 	</select>
+	 	</div>
+	</div>
+	
+ </body>
+</html>
+
+ <!--
+
+	//console.log($(".preview-iframe").prop("clientWidth"));
+	//console.log($(".preview-iframe").prop("scrollWidth"));
+	//console.log($(".preview-iframe").get(0).contentWindow.outerWith);
+	//console.log($(".preview-iframe").contents().find("body").css("width"));
+
+	<ul class="emmet-re-view__list" data-mode="pick-one"> 
+	   <li id="amazon-kindle-fire-first-generation" class="emmet-re-view__list-item"><input type="checkbox" id="fld-amazon-kindle-fire-first-generation" class="emmet-re-view__list-item-input" value="amazon-kindle-fire-first-generation" /><label for="fld-amazon-kindle-fire-first-generation" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Amazon Kindle Fire First Generation</span><span class="emmet-re-view__list-item-info">1024&times;600</span></label></li>
+	   <li id="amazon-kindle-fire-hdx-7" class="emmet-re-view__list-item"><input type="checkbox" id="fld-amazon-kindle-fire-hdx-7" class="emmet-re-view__list-item-input" value="amazon-kindle-fire-hdx-7" /><label for="fld-amazon-kindle-fire-hdx-7" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Amazon Kindle Fire HDX 7</span><span class="emmet-re-view__list-item-info">1920&times;1200</span></label></li>
+	   <li id="amazon-kindle-fire-hdx-8-9" class="emmet-re-view__list-item"><input type="checkbox" id="fld-amazon-kindle-fire-hdx-8-9" class="emmet-re-view__list-item-input" value="amazon-kindle-fire-hdx-8-9" /><label for="fld-amazon-kindle-fire-hdx-8-9" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Amazon Kindle Fire HDX 8.9</span><span class="emmet-re-view__list-item-info">2560&times;1600</span></label></li>
+	   <li id="apple-ipad" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-ipad" class="emmet-re-view__list-item-input" value="apple-ipad" /><label for="fld-apple-ipad" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPad</span><span class="emmet-re-view__list-item-info">1024&times;768</span></label></li>
+	   <li id="apple-ipad-mini" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-ipad-mini" class="emmet-re-view__list-item-input" value="apple-ipad-mini" /><label for="fld-apple-ipad-mini" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPad Mini</span><span class="emmet-re-view__list-item-info">1024&times;768</span></label></li>
+	   <li id="apple-ipad-mini-2" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-ipad-mini-2" class="emmet-re-view__list-item-input" value="apple-ipad-mini-2" /><label for="fld-apple-ipad-mini-2" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPad Mini 2 / 3</span><span class="emmet-re-view__list-item-info">1024&times;768</span></label></li>
+	   <li id="apple-iphone-3gs" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-iphone-3gs" class="emmet-re-view__list-item-input" value="apple-iphone-3gs" /><label for="fld-apple-iphone-3gs" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPhone 3GS</span><span class="emmet-re-view__list-item-info">320&times;480</span></label></li>
+	   <li id="apple-iphone-4" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-iphone-4" class="emmet-re-view__list-item-input" value="apple-iphone-4" /><label for="fld-apple-iphone-4" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPhone 4</span><span class="emmet-re-view__list-item-info">320&times;480</span></label></li>
+	   <li id="apple-iphone-5" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-iphone-5" class="emmet-re-view__list-item-input" value="apple-iphone-5" /><label for="fld-apple-iphone-5" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPhone 5</span><span class="emmet-re-view__list-item-info">320&times;568</span></label></li>
+	   <li id="apple-iphone-6" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-iphone-6" class="emmet-re-view__list-item-input" value="apple-iphone-6" /><label for="fld-apple-iphone-6" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPhone 6</span><span class="emmet-re-view__list-item-info">375&times;667</span></label></li>
+	   <li id="apple-iphone-6-plus" class="emmet-re-view__list-item"><input type="checkbox" id="fld-apple-iphone-6-plus" class="emmet-re-view__list-item-input" value="apple-iphone-6-plus" /><label for="fld-apple-iphone-6-plus" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Apple iPhone 6 Plus</span><span class="emmet-re-view__list-item-info">414&times;736</span></label></li>
+	   <li id="blackberry-classic" class="emmet-re-view__list-item"><input type="checkbox" id="fld-blackberry-classic" class="emmet-re-view__list-item-input" value="blackberry-classic" /><label for="fld-blackberry-classic" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">BlackBerry Classic</span><span class="emmet-re-view__list-item-info">390&times;374</span></label></li>
+	   <li id="blackberry-passport" class="emmet-re-view__list-item"><input type="checkbox" id="fld-blackberry-passport" class="emmet-re-view__list-item-input" value="blackberry-passport" /><label for="fld-blackberry-passport" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">BlackBerry Passport</span><span class="emmet-re-view__list-item-info">504&times;462</span></label></li>
+	   <li id="blackberry-playbook" class="emmet-re-view__list-item"><input type="checkbox" id="fld-blackberry-playbook" class="emmet-re-view__list-item-input" value="blackberry-playbook" /><label for="fld-blackberry-playbook" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">BlackBerry PlayBook</span><span class="emmet-re-view__list-item-info">1024&times;600</span></label></li>
+	   <li id="blackberry-z10" class="emmet-re-view__list-item"><input type="checkbox" id="fld-blackberry-z10" class="emmet-re-view__list-item-input" value="blackberry-z10" /><label for="fld-blackberry-z10" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">BlackBerry Z10</span><span class="emmet-re-view__list-item-info">384&times;640</span></label></li>
+	   <li id="blackberry-z30" class="emmet-re-view__list-item"><input type="checkbox" id="fld-blackberry-z30" class="emmet-re-view__list-item-input" value="blackberry-z30" /><label for="fld-blackberry-z30" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">BlackBerry Z30</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="generic-notebook" class="emmet-re-view__list-item"><input type="checkbox" id="fld-generic-notebook" class="emmet-re-view__list-item-input" value="generic-notebook" /><label for="fld-generic-notebook" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Generic notebook</span><span class="emmet-re-view__list-item-info">1280&times;800</span></label></li>
+	   <li id="google-nexus-10" class="emmet-re-view__list-item"><input type="checkbox" id="fld-google-nexus-10" class="emmet-re-view__list-item-input" value="google-nexus-10" /><label for="fld-google-nexus-10" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Google Nexus 10</span><span class="emmet-re-view__list-item-info">1280&times;800</span></label></li>
+	   <li id="google-nexus-4" class="emmet-re-view__list-item"><input type="checkbox" id="fld-google-nexus-4" class="emmet-re-view__list-item-input" value="google-nexus-4" /><label for="fld-google-nexus-4" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Google Nexus 4</span><span class="emmet-re-view__list-item-info">384&times;640</span></label></li>
+	   <li id="google-nexus-5" class="emmet-re-view__list-item"><input type="checkbox" id="fld-google-nexus-5" class="emmet-re-view__list-item-input" value="google-nexus-5" /><label for="fld-google-nexus-5" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Google Nexus 5</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="google-nexus-7" class="emmet-re-view__list-item"><input type="checkbox" id="fld-google-nexus-7" class="emmet-re-view__list-item-input" value="google-nexus-7" /><label for="fld-google-nexus-7" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Google Nexus 7</span><span class="emmet-re-view__list-item-info">960&times;600</span></label></li>
+	   <li id="google-nexus-s" class="emmet-re-view__list-item"><input type="checkbox" id="fld-google-nexus-s" class="emmet-re-view__list-item-input" value="google-nexus-s" /><label for="fld-google-nexus-s" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Google Nexus S</span><span class="emmet-re-view__list-item-info">320&times;533</span></label></li>
+	   <li id="htc-evo" class="emmet-re-view__list-item"><input type="checkbox" id="fld-htc-evo" class="emmet-re-view__list-item-input" value="htc-evo" /><label for="fld-htc-evo" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">HTC Evo, Touch HD, Desire HD, Desire</span><span class="emmet-re-view__list-item-info">320&times;533</span></label></li>
+	   <li id="htc-one-m7" class="emmet-re-view__list-item"><input type="checkbox" id="fld-htc-one-m7" class="emmet-re-view__list-item-input" value="htc-one-m7" /><label for="fld-htc-one-m7" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">HTC One M7</span><span class="emmet-re-view__list-item-info">360&times;615</span></label></li>
+	   <li id="htc-one-x" class="emmet-re-view__list-item"><input type="checkbox" id="fld-htc-one-x" class="emmet-re-view__list-item-input" value="htc-one-x" /><label for="fld-htc-one-x" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">HTC One X, EVO LTE</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="htc-sensation" class="emmet-re-view__list-item"><input type="checkbox" id="fld-htc-sensation" class="emmet-re-view__list-item-input" value="htc-sensation" /><label for="fld-htc-sensation" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">HTC Sensation, Evo 3D</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="lg-optimus-2x" class="emmet-re-view__list-item"><input type="checkbox" id="fld-lg-optimus-2x" class="emmet-re-view__list-item-input" value="lg-optimus-2x" /><label for="fld-lg-optimus-2x" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">LG Optimus 2X, Optimus 3D, Optimus Black</span><span class="emmet-re-view__list-item-info">320&times;533</span></label></li>
+	   <li id="lg-optimus-g" class="emmet-re-view__list-item"><input type="checkbox" id="fld-lg-optimus-g" class="emmet-re-view__list-item-input" value="lg-optimus-g" /><label for="fld-lg-optimus-g" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">LG Optimus G</span><span class="emmet-re-view__list-item-info">384&times;640</span></label></li>
+	   <li id="lg-optimus-lte" class="emmet-re-view__list-item"><input type="checkbox" id="fld-lg-optimus-lte" class="emmet-re-view__list-item-input" value="lg-optimus-lte" /><label for="fld-lg-optimus-lte" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">LG Optimus LTE, Optimus 4X HD</span><span class="emmet-re-view__list-item-info">424&times;753</span></label></li>
+	   <li id="lg-optimus-one" class="emmet-re-view__list-item"><input type="checkbox" id="fld-lg-optimus-one" class="emmet-re-view__list-item-input" value="lg-optimus-one" /><label for="fld-lg-optimus-one" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">LG Optimus One</span><span class="emmet-re-view__list-item-info">213&times;320</span></label></li>
+	   <li id="motorola-defy" class="emmet-re-view__list-item"><input type="checkbox" id="fld-motorola-defy" class="emmet-re-view__list-item-input" value="motorola-defy" /><label for="fld-motorola-defy" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Motorola Defy, Droid, Droid X, Milestone</span><span class="emmet-re-view__list-item-info">320&times;569</span></label></li>
+	   <li id="motorola-droid-3" class="emmet-re-view__list-item"><input type="checkbox" id="fld-motorola-droid-3" class="emmet-re-view__list-item-input" value="motorola-droid-3" /><label for="fld-motorola-droid-3" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Motorola Droid 3, Droid 4, Droid Razr, Atrix 4G, Atrix 2</span><span class="emmet-re-view__list-item-info">540&times;960</span></label></li>
+	   <li id="motorola-droid-razr-hd" class="emmet-re-view__list-item"><input type="checkbox" id="fld-motorola-droid-razr-hd" class="emmet-re-view__list-item-input" value="motorola-droid-razr-hd" /><label for="fld-motorola-droid-razr-hd" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Motorola Droid Razr HD</span><span class="emmet-re-view__list-item-info">720&times;1280</span></label></li>
+	   <li id="motorola-xoom" class="emmet-re-view__list-item"><input type="checkbox" id="fld-motorola-xoom" class="emmet-re-view__list-item-input" value="motorola-xoom" /><label for="fld-motorola-xoom" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Motorola Xoom, Xyboard</span><span class="emmet-re-view__list-item-info">1280&times;800</span></label></li>
+	   <li id="nokia-c5" class="emmet-re-view__list-item"><input type="checkbox" id="fld-nokia-c5" class="emmet-re-view__list-item-input" value="nokia-c5" /><label for="fld-nokia-c5" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Nokia C5, C6, C7, N97, N8, X7</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="nokia-lumia-7x0" class="emmet-re-view__list-item"><input type="checkbox" id="fld-nokia-lumia-7x0" class="emmet-re-view__list-item-input" value="nokia-lumia-7x0" /><label for="fld-nokia-lumia-7x0" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Nokia Lumia 7X0, Lumia 8XX, Lumia 900, N800, N810, N900</span><span class="emmet-re-view__list-item-info">320&times;533</span></label></li>
+	   <li id="notebook-with-hidpi-screen" class="emmet-re-view__list-item"><input type="checkbox" id="fld-notebook-with-hidpi-screen" class="emmet-re-view__list-item-input" value="notebook-with-hidpi-screen" /><label for="fld-notebook-with-hidpi-screen" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Notebook with HiDPI screen</span><span class="emmet-re-view__list-item-info">1440&times;900</span></label></li>
+	   <li id="notebook-with-touch" class="emmet-re-view__list-item"><input type="checkbox" id="fld-notebook-with-touch" class="emmet-re-view__list-item-input" value="notebook-with-touch" /><label for="fld-notebook-with-touch" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Notebook with touch</span><span class="emmet-re-view__list-item-info">1280&times;950</span></label></li>
+	   <li id="samsung-galaxy-note" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-note" class="emmet-re-view__list-item-input" value="samsung-galaxy-note" /><label for="fld-samsung-galaxy-note" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy Note</span><span class="emmet-re-view__list-item-info">400&times;640</span></label></li>
+	   <li id="samsung-galaxy-note-3" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-note-3" class="emmet-re-view__list-item-input" value="samsung-galaxy-note-3" /><label for="fld-samsung-galaxy-note-3" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy Note 3</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="samsung-galaxy-note-ii" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-note-ii" class="emmet-re-view__list-item-input" value="samsung-galaxy-note-ii" /><label for="fld-samsung-galaxy-note-ii" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy Note II</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="samsung-galaxy-s-iii" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-s-iii" class="emmet-re-view__list-item-input" value="samsung-galaxy-s-iii" /><label for="fld-samsung-galaxy-s-iii" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy S III, Galaxy Nexus</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="samsung-galaxy-s" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-s" class="emmet-re-view__list-item-input" value="samsung-galaxy-s" /><label for="fld-samsung-galaxy-s" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy S, S II, W</span><span class="emmet-re-view__list-item-info">320&times;533</span></label></li>
+	   <li id="samsung-galaxy-s4" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-s4" class="emmet-re-view__list-item-input" value="samsung-galaxy-s4" /><label for="fld-samsung-galaxy-s4" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy S4</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="samsung-galaxy-tab" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-tab" class="emmet-re-view__list-item-input" value="samsung-galaxy-tab" /><label for="fld-samsung-galaxy-tab" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy Tab</span><span class="emmet-re-view__list-item-info">1024&times;600</span></label></li>
+	   <li id="samsung-galaxy-tab-7" class="emmet-re-view__list-item"><input type="checkbox" id="fld-samsung-galaxy-tab-7" class="emmet-re-view__list-item-input" value="samsung-galaxy-tab-7" /><label for="fld-samsung-galaxy-tab-7" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Samsung Galaxy Tab 7.7, 8.9, 10.1</span><span class="emmet-re-view__list-item-info">1280&times;800</span></label></li>
+	   <li id="sony-xperia-s" class="emmet-re-view__list-item"><input type="checkbox" id="fld-sony-xperia-s" class="emmet-re-view__list-item-input" value="sony-xperia-s" /><label for="fld-sony-xperia-s" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Sony Xperia S, Ion</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	   <li id="sony-xperia-sola" class="emmet-re-view__list-item"><input type="checkbox" id="fld-sony-xperia-sola" class="emmet-re-view__list-item-input" value="sony-xperia-sola" /><label for="fld-sony-xperia-sola" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Sony Xperia Sola, U</span><span class="emmet-re-view__list-item-info">480&times;854</span></label></li>
+	   <li id="sony-xperia-z" class="emmet-re-view__list-item"><input type="checkbox" id="fld-sony-xperia-z" class="emmet-re-view__list-item-input" value="sony-xperia-z" /><label for="fld-sony-xperia-z" class="emmet-re-view__list-item-label"><span class="emmet-re-view__list-item-label-inner">Sony Xperia Z, Z1</span><span class="emmet-re-view__list-item-info">360&times;640</span></label></li>
+	</ul> 
+-->
