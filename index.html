@@ -76,6 +76,7 @@
 
 			// Delete the DIV 
 			document.body.removeChild(scrollDiv);
+
 			return scrollbarWidth;
 		}
 
@@ -100,7 +101,10 @@
         };
 
 		$(document).ready(function(){
-
+			console.log(window);
+			console.log(window.top);
+			console.log(window.parent.parent);
+			console.log(window.opener);
 			$("#device").change(function(){
 				var  scrollWidth=+scrollbarwidth();
 				console.log(scrollWidth);
