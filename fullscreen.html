@@ -1,0 +1,41 @@
+<html>
+ <head>
+ 	<script src="js/jquery.min.js"></script>
+ </head>
+ <body>
+ 	<img src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/user/8f2903b0b3d04a28869610968614191b.png" alt="1484273739471077119.jpg"/>
+ 	<a href="#">
+		<img src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/user/8f2903b0b3d04a28869610968614191b.png" alt="1484273739471077119.jpg"/>
+ 	</a>
+ 	<img src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/user/8f2903b0b3d04a28869610968614191b.png" alt="1484273739471077119.jpg"/>
+ <!--
+ 	<img src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/ueditorupload/image/20170113/1484273739471077119.jpg" alt="1484273739471077119.jpg"/>
+ 	<img src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/ueditorupload/image/20170113/1484273739471077119.jpg" alt="1484273739471077119.jpg"/>
+ 	<img src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/ueditorupload/image/20170113/1484273739471077119.jpg" alt="1484273739471077119.jpg"/>
+ 	<img class="bigimg"  src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/user/8f2903b0b3d04a28869610968614191b.png" >
+ 	<img class="bigimg" src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/user/4098992ce6a849dba65bc1a537d9485a.png" >
+	<img class="bigimg" src="http://bossappnew.oss-cn-hangzhou.aliyuncs.com/user/7f25b572e07448038f8fa5c0d5db3fa9.png" >
+-->
+	<script type="text/javascript">
+		function bigimg()
+		{
+			//var bigimgAll=$(".bigimg").add($("[src^='http://bossappnew']"));
+			//var bigimgAll=$("*:not(a) > img");//.add($("*:not(a) img[src^='http://bossappnew']"));
+			//console.log(bigimgAll.get());
+			var bigimgAll=$("*:not(a) > img.bigimg").add($("*:not(a) > img[src^='http://bossappnew']"));
+			var imgs=bigimgAll.get();
+			var imgsUrl=imgs.map(one=>one.src);
+			bigimgAll.on("click",function(e){
+				var index=imgs.indexOf(e.target);
+				console.log(imgsUrl);
+				console.log(index);
+			});
+		}
+		$(document).ready(function(){
+			bigimg();
+		});
+	</script>
+
+ </body>
+</html>
+
